@@ -20,19 +20,22 @@ Classes, tables, events, etc. should all derive their names from the terms in th
 
 ## Testing
 
-Be pragmatic.
-At first, cover only the most essential parts.
+Be pragmatic.  
+At first, cover only the most essential parts.  
+Use the structure Arrange, Act, Assert.
 
 ## Core Concepts
 
 ### Entities
 
-Have it's own identity and can live independently of other objects.
+Have it's own identity and can live independently of other objects.  
+Equality checks should be implemented in the entity class itself, or, in an Entity base class.
 
 ### Value objects
 
-Must be immutable. If value objects have the same member values, they can be treated interchangably.
-Value objects cannot have a life on its own. Must live within an entity.
+Must be immutable. If value objects have the same member values, they can be treated interchangably.  
+Value objects cannot have a life on its own. Must live within an entity.  
+Prefer Value Objects to Entities, and place most business loginc here.
 
 ### Equality
 
@@ -45,5 +48,13 @@ There are generally three types of equality of objects:
 3. Structural
    If all members of the two objects match, they are the same
 
-Entities and value objects differ in the way they are tested for equality.
+Entities and value objects differ in the way they are tested for equality.  
 Entities has equal identifiers whereas value objects has structural equality.
+
+### Domain Events
+
+A domain event is an event significant to the domain.  
+Used to decouple bounded contexts, or, allow uni-directional references between contexts.
+Should be named in past tense due to it's something that has happend in the domain.
+Don't use domain classes to represent event data.  
+Do use primitive types to represent event data.
