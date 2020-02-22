@@ -32,3 +32,6 @@ Microsoft.AspNetCore.Identity.EntityFrameworkCore
 
 Microsoft.Extensions.Configuration  
 Microsoft.Extensions.Configuration.Json
+
+## Benchmarking
+BenchmarkDotNet.Core
