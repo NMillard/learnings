@@ -5,7 +5,7 @@
 [X] ASP.NET Core Authentication
 [-] Cryptography
 [] Security best practices
-[] 
+[] Software Architecture
 [] RabbitMQ
 [] Background workers
 [] DevOps
