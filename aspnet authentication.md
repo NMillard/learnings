@@ -86,13 +86,32 @@ The authentication of a schema is configured in the Startup.cs AddAuthentication
 
 ## Cookie authentication
 
+When signing in with cookie authentication, an Identity Cookie is sent back to the client. This cookie allows ASP.NET to track the user - i.e. to know which user a request belongs to.  
+All user information is safely stored - including the claims.
+
+The cookie is then encrypted with a symmetric key only the server has.
+
 ## Json Web Token authentication
 
 ## External Identity authentication
 
-Data returned from external identity providers should be stored temporarily. In ASP.NET Core, the loginProvider is the authentication scheme to be used
+Data returned from external identity providers should be stored temporarily.  
+In ASP.NET Core, the loginProvider (such as `google`, `facebook`, etc.) is the authentication scheme to be used.
+
+When logging in using external providers, you receive a token containing the user's claims. These claims are then used to generate the ClaimsPrincipal and Identity Cookie.
+
+Subsequent requests just simply use the new Identity Cookie.
 
 # Security
+
+## Authentication Schemes
+
+Authentication is the process of verifying an identity. Authenticaion Schemes can be viewed as guards for a resource.
+
+You can have a user that is authenticated using a cookie scheme, but tries to access a resource that required more thorough identiy verification.
+The user may then be challenged to prove it/her/his identity with another authentication scheme, that for instance requires two-factor authentication.
+
+When challenged, ASP.NET will find the authentication handler that is registered with the challenging scheme.
 
 ## Password reset link
 
@@ -102,7 +121,7 @@ Must adhere to four criteria
 2. Time sensitive - link will only be accessible for a short period of time
 3. The link must contain some randomness to be "un-guessable"
 4. One time use only
-   ^ A token fulfilling these criteria can be generated using the UserManager's GeneratePasswordResetTokenAsync() method
+   ^ A token fulfilling these criteria can be generated using the UserManager's `GeneratePasswordResetTokenAsync()` method
 
 ## Email confirmation link
 
@@ -135,8 +154,8 @@ the AddIdentity() using AddPasswordValidator<TPasswordValidator>() method
 ## Multi Step/Factor Authentication
 
 One-step verification - Sign in using just password  
-Two-step verification - Sign in using password and e.g. a passphrase sent to another device  
-Two-Factor Authentication - Sign in using password and an other means of authenticating who you are, e.g. finger-print, iris scan, etc.  
+Two-step verification (2SV) - Sign in using password and e.g. a passphrase sent to another device  
+Two-Factor Authentication (2FA) - Sign in using password and an other means of authenticating who you are, e.g. finger-print, iris scan, etc.  
 Should use an Authenticator App from e.g. google or microsoft
 
 ## Two-Step Verification
@@ -148,7 +167,17 @@ Generated tokens last for 3 minutes and uses the user's email or phone number an
 ## Two-Factor Authentication
 
 After successfully logging in, users can add a trusted device used for two-factor authentication  
-A Authenticator Key must be generated and used on the Authenticator app, like Microsoft Authenticator or Google's  
+An Authenticator Key must be generated and used on the Authenticator app, like Microsoft Authenticator or Google's  
 When logging in using 2FA, both the TOTP from the Authenticator app in combination with the Authenticator Key must be provided
 
 UserManager provides two handy methods for this: GetAuthenticatorKeyAsync(user) to get the Authenticator Key and VerifyTwoFactorTokenAsync(user, tokenProvider, token) to verify the token
+
+# Setting up Authentication in ASP.NET Core
+
+When registering an authentication handler, you should also provide an authentication scheme for the handler.  
+If scheme is not provided, a default scheme is used. You have to look in the documentation to see the name of the default authentication scheme for a specific handler.
+
+Call `services.AddAuthentication()`  
+Call `.AddCookie()` to add the Cookie Authentication Scheme to the authentication configuration
+
+Place `[Authorize]` on controllers and methods to restrict access. It will use the default authentication scheme if non is specified.
