@@ -45,7 +45,7 @@ Setup table specifying all application configurations, like below
 
 | Item | Definition | Global/App | Has Secrets? | Env-specific? |
 | ---- | ---------- | ---------- | ------------ | ------------- |
-
+|      |            |            |              |               |
 
 # Run-Time Requirements
 
