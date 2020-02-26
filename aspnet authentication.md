@@ -95,12 +95,79 @@ The cookie is then encrypted with a symmetric key only the server has.
 
 ## External Identity authentication
 
-Data returned from external identity providers should be stored temporarily.  
-In ASP.NET Core, the loginProvider (such as `google`, `facebook`, etc.) is the authentication scheme to be used.
-
 When logging in using external providers, you receive a token containing the user's claims. These claims are then used to generate the ClaimsPrincipal and Identity Cookie.
 
 Subsequent requests just simply use the new Identity Cookie.
+
+Steps to request authentication with external provider:
+
+1. Provide an endpoint that receives the name of the external provider, that the user would like to authenticate with
+2. Issue a challenge where scheme is defined as the name of the external provider
+
+```
+Example endpoint
+
+public class ExternalLoginModel {
+  [Required] public string Provider { get; set; }
+}
+
+[HttpGet("[action]")]
+public IActionResult ExternalLoginCallback(ExternalLoginModel model) {
+    var properties = new AuthenticationProperties {
+        RedirectUri = Url.Action("ExternalLogin"),
+        Items = {{"scheme", model.Provider}}
+
+    return Challenge(properties, model.Provider);
+}
+```
+
+Steps to login the user after successful authentication:
+
+1. Receive the request at some defined endpoint (e.g. /external-callback)
+2. Authenticate the request with a scheme like "Identity.External". It's important at this stage, that the request is not authenticated with the actual application scheme.
+3. Generate a ClaimsPrincipal with the received claims
+4. Sign out of the external scheme
+5. Sign into the application scheme
+
+If you use ASP.NET Identity, you may need more steps inbetween step 3 and 4.  
+See example below
+
+```
+Example callback endpoint
+public async Task<IActionResult> ExternalLogin() {
+    AuthenticateResult result = await HttpContext.AuthenticateAsync(IdentityConstants.ExternalScheme);
+    var externalUserId = result.Principal.FindFirstValue("sub") ??
+                         result.Principal.FindFirstValue(ClaimTypes.NameIdentifier) ??
+                         throw new InvalidOperationException();
+
+    string provider = result.Properties.Items["scheme"];
+    AppUser user = await userManager.FindByLoginAsync(provider, externalUserId);
+
+    if (user == null) {
+        string email = result.Principal.FindFirstValue("email") ??
+                       result.Principal.FindFirstValue(ClaimTypes.Email);
+
+        if (email != null) {
+            user = await userManager.FindByEmailAsync(email);
+            if (user == null) {
+                user = new AppUser(email);
+                await userManager.CreateAsync(user);
+            }
+
+            await userManager.AddLoginAsync(user, new UserLoginInfo(provider, externalUserId, provider));
+        }
+    }
+
+    if (user == null) return RedirectToAction(nameof(Index));
+
+    await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+    ClaimsPrincipal principal = await principalFactory.CreateAsync(user);
+    await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme, principal);
+
+    return RedirectToAction(nameof(Claims));
+}
+
+```
 
 # Security
 
