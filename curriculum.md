@@ -4,7 +4,7 @@
 [X] ASP.NET Core Authentication  
 [x] Cryptography  
 [x] Software Architecture  
-[] Security best practices  
+[-] Security best practices  
 [] Azure Event Bus
 [] Azure BlobStorage
 [] RabbitMQ  
@@ -14,6 +14,7 @@
 [] TypeScript  
 [] React  
 [] Front-end design
+[] CosmosDB
 
 # Project management
 
@@ -28,5 +29,5 @@ Some small coding projects that will teach some important lessons and functional
 [] Web app with real-time notifications  
 [] Web app that publishes events to a message queue  
 [] Web app showing a map that you can draw on  
-[] Web app using blob storage  
+[] Web app - upload files and save using blob-storage  
 [x] Web app that uses azure key vault
