@@ -1,5 +1,10 @@
 # Azure Fundamentals
 
+## Region
+
+A region is an Azure data center in a specific geographic location.  
+All resources are created in a subscription and region.
+
 ## Subscription
 
 This is basically a logical container used to provision resources. Every resource created will be associated with a subscription.  
@@ -35,6 +40,8 @@ Show all resources in specific group
 
 ### Azure virtual network
 
+Enables you to create private networks in the cloud, giving full control over IP addresses, DNS servers, security rules, and traffic flows.
+
 Logically isolated network on Azure. Allows secure communication between Azure resources on the network.  
 Virtual networks are scoped to a single region, but can be connected with other regions thru network peering.
 
@@ -42,9 +49,20 @@ Virtual networks can be divided into subnets.
 
 On-premise devices can be connected to the Azure virtual network using a VPN/virtual network gateway.
 
+### Azure VPN Gateway
+
+Virtual network gateway that is used to send encrypted traffic between an Azure Virtual Network and an on-premise location using the public internet.  
+VNet can also be used to send encrypted traffic between Azure virtual networks over the Microsoft network.
+
+Each virtual network can only have one VPN gateway.
+
+### Azure ExpressRoute
+
+Create private connections between Azure data centers and infrastructure on your environment. This does not use the public internet.
+
 ### Network security group
 
-An NSG allows or denies inbound network traffic to the Azure resources - it's like a cloud-level firewall.
+An NSG allows or denies inbound network traffic to the Azure resources, i.e. filtering traffic - it's like a cloud-level firewall.
 
 ## Security
 
@@ -88,7 +106,7 @@ Service certificates are attached to services to ensure secure communication to 
 
 Certificates can be stored in Azure Key Vault, which allows auto-renewal.
 
-## Inbound protection (network perimeter)
+### Inbound protection (network perimeter)
 
 In Azure, there are three typical ways of providing inbound protection.
 
@@ -129,3 +147,52 @@ Factors that affect costs are:
 2. Services
 3. Location
 4. Azure billing zones
+
+Use Azure Pricing Calculator[1] to easily get an estimate of what services cost.
+[1]: https://azure.microsoft.com/en-us/pricing/calculator/
+
+Post-deployment, you can use the Azure Advisor to get recommendations on running services.
+
+Azure Cost Management is another service you can use to get insights into your cloud spendings.
+
+### Zones
+
+A zone is a geographical grouping of Azure regions used to determine billing based on data transfers. Billing applies to both inbound and outbound traffic.  
+Data transfer between zones and regions within zones are billed. Transfers between zones in the same region are not billed.
+
+### Migrating to PaaS or SaaS services
+
+Moving from on-premise to the cloud should be done iteratively.  
+You can start by provisioning IaaS and move those to PaaS or SaaS.
+
+## License costs
+
+Where you have a choice and your application is indifferent to the OS, it's a good idead to choose the cheapest option.
+
+### Existing licenses
+
+If you have existing licenses, such as for SQL Server og Windows, you may be eligible to get a reduced rate at Azure for those services. To use an existing licens, search for BYOL services.  
+You may also youse Dev/Test subscriptions to avoid paying licensing fees. These must only be used for development and test environments. Also, all users must be covered under a Visual Studio subscription.
+
+## Azure Services
+
+### Azure Security Center
+
+### Azure Service Health
+
+This service is composed of Azure status, the service health service, and Resource Health.  
+Notifies one about current and upcoming issues such as service impacting events, planned maintenance, and other changes that affect availability.
+
+Azure status: informs you about service outages in Azure.
+Azure service health: provides information about the health of Azure services and regions you're using.
+Azure resource health: informationa about the individual resources you are using.
+
+### Azure Advisor
+
+### Azure Monitor
+
+Maximizes availability and performance. Delivers a comprehensive solution for collecting, analyzing, and acting on telemetry from cloud and on-premise environments.
+
+All data collected by the monitor is either in the form of metrics or logs.
+
+Azure monitor can use autoscale to add or remove resources to minimize costs and ensure performance. Rules can be set up based on metrics.
