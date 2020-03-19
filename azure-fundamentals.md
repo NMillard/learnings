@@ -1,5 +1,20 @@
 # Azure Fundamentals
 
+## Cloud concepts
+When using cloud services, you are basically renting compute power from someone else.
+
+The concepts to know about are:
+- High availability
+- Scalability
+- Elasticity
+- Agility
+- Fault tolerance
+- Disaster recovery
+- Global reach
+- Customer latency capabilites
+- Predictive cost considerations
+- Security
+
 ## Region
 
 A region is an Azure data center in a specific geographic location.  
@@ -117,13 +132,44 @@ In Azure, there are three typical ways of providing inbound protection.
 3. Network Virtual appliances (NVAs)
    Ideal for non-HTTP services - is similar to hardware firewall appliances
 
+### Role-based access control (RBAC)
+Roles are applied to a scope where the permissions are effective.  
+Scopes are:
+- Management groups: used to organnize multiple subscriptions
+- Subscripts
+- Resouce groups
+- Resources
+
+Roles are assigned to:
+- Users
+- Groups
+- Service principals: e.g. a resource that needs access to another resource
+
+Roles are assigned using the Access control (IAM) menu option on e.g. a resource group or resource.  
+
 ## IT compliance
 
 ### Policies
 
-Creating a policy starts with creating a policy definition. This has 1) conditions under which it is enforced and accompanying effect that takes place if the conditions are met.
+Creating a policy starts with creating a policy definition. This has 1) conditions under which it is enforced and accompanying effect that takes place if the conditions are met.  
 
-Multiple policies can be grouped into _initiatives_. Managing access, policies and compliance across subscriptions can be done using Azure Management Groups.
+Multiple policies can be grouped into _initiatives_. Managing access, policies and compliance across subscriptions can be done using Azure Management Groups.  
+
+Resources are scanned hourly for compliance with policies.  
+
+Use Azure Policies and assignments to enforce conventions, such as naming.  
+
+Policies can be created with the Portal, PowerShell or Azure CLI.  
+To create policies, the logged in account must have the permission Microsoft.Authorization/policyassignment/write.  
+
+#### Policy Effects
+| Effect            |                                  Description                                  |
+|-------------------|:-----------------------------------------------------------------------------:|
+| Append            |                          Resource property additions                          |
+| Audit             |                       Logging only; generates a warning                       |
+| AuditIfNotExists  |                Auditing is enabled if resource does not exist                 |
+| Deny              | Existing non-compliant resources are marked as non-compliant, but not deleted |
+| DeployIfNotExists |               If the resource does not already exist, deploy it               |
 
 ## Organizing resources
 
@@ -133,13 +179,17 @@ Deployment - every resource is one deployment unit.
 Use resource groups to organize resources. Find and use a consistent naming and grouping convention.  
 For project work, it makes sense to create a resource group per project for easier billing management.
 
-Alternatively, tags can be used to group resources.
+### Tags
 
-Use Azure Policies and assignments to enforce conventions.
+Alternatively, tags can be used to group resources. Tags are basically meta-information attached to resources.
 
 Place _locks_ on resources to avoid deletion by mistake. Locks can easily be removed again.
 
 ## Cost
+
+### CapEx vs OpEx
+Capital Expenditure (CapEx) is spending money on physical infrastructure upfront, and then deducting taxes over time.  
+Operational Expenditure (OpEx) is pending money on services or products and being billed immediately.
 
 Factors that affect costs are:
 
@@ -171,7 +221,7 @@ Where you have a choice and your application is indifferent to the OS, it's a go
 
 ### Existing licenses
 
-If you have existing licenses, such as for SQL Server og Windows, you may be eligible to get a reduced rate at Azure for those services. To use an existing licens, search for BYOL services.  
+If you have existing licenses, such as for SQL Server og Windows, you may be eligible to get a reduced rate at Azure for those services. To use an existing licens, search for BYOL (Bring Your Own License) services.  
 You may also youse Dev/Test subscriptions to avoid paying licensing fees. These must only be used for development and test environments. Also, all users must be covered under a Visual Studio subscription.
 
 ## Azure Services
@@ -188,6 +238,7 @@ Azure service health: provides information about the health of Azure services an
 Azure resource health: informationa about the individual resources you are using.
 
 ### Azure Advisor
+The advior provides recommendations for High Availablity, Security, Performance, and Cost.
 
 ### Azure Monitor
 
