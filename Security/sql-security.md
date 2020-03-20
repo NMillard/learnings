@@ -1,11 +1,9 @@
 # MS-SQL Server Security
 
 ## Basic concepts
-**Principal**
-Is an identity - it can be an individual person or a role (group of users).
+**Principal** is an identity - it can be an individual person or a role (group of users).
 
-**Permissions**
-Permissions can be assigned to individual users, roles, etc.  
+**Permissions** can be assigned to individual users, roles, etc.  
 Permissions are added up, i.e. if a user has some permissions, and is also assigned a role, the user will then inhert the permissions from that role as well.  
 
 _Server-level permissions_  
@@ -43,8 +41,8 @@ Database-level firewall rules: allow access to a specific database
 
 For more about SQL firewalls: https://docs.microsoft.com/en-us/azure/sql-database/sql-database-firewall-configure
 
-# Database access
-**Login**
+## Database access
+#### login 
   Login is a Server (instance) level security that can take advantage of external providers like WINDOWS or Active Directory.
   A default database can also be assigned to a login (does not work in Azure SQL).
   When creating logins, you can also enforce policies by adding CHECK_POLICY = on (policy check does not work in Azure SQL)
@@ -56,7 +54,7 @@ WITH PASSWORD = 'some_secret_pw'
 
 Creating logins: https://docs.microsoft.com/en-us/sql/t-sql/statements/create-login-transact-sql?view=sql-server-ver15
 
-**User**
+#### User  
 Database level security.
 
 ```
@@ -68,7 +66,7 @@ WITH DEFAULT_SCHEMA = app
 Users that own any objects cannot be dropped.   
 Creating users: https://docs.microsoft.com/en-us/sql/relational-databases/security/authentication-access/create-a-database-user?view=sql-server-ver15  
 
-**Schema**
+#### Schema  
 Basically a container for database objects (i.e. tables, views, stored procs, etc.)
 
 One login may have multiple users connected to it, but only one user per database is allowed for one login.
@@ -76,7 +74,7 @@ One login may have multiple users connected to it, but only one user per databas
 Always assign permissions on a least-privilege basis.
 
 
-**Specials**
+#### Specials  
 _dbo_  
 The dbo (database owner) user is mapped to the sa (Server Administrator) login.  
 This is a special account setup at MS SQL Server creation time. You can do anything on the SQL Server with this user.  
