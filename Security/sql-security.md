@@ -1,7 +1,8 @@
 # MS-SQL Server Security
 
 ## Basic concepts
-**Principal** is an identity - it can be an individual person or a role (group of users).
+**Principal** is an identity - it can be an individual person or a role (group of users).  
+Principals can request SQL server resources. Every principal as a security identrifier (SID).
 
 **Permissions** can be assigned to individual users, roles, etc.  
 Permissions are added up, i.e. if a user has some permissions, and is also assigned a role, the user will then inhert the permissions from that role as well.  
@@ -25,12 +26,59 @@ Managed using  GRANT, REVOKE, DENY.
 More on permissions here: https://docs.microsoft.com/en-us/sql/relational-databases/security/permissions-database-engine?view=sql-server-ver15
 
 **Secureables**
-The object that is being secured, such as a Database, schema, tables, views, etcs.  
+The object that is being secured, such as a Database, schema, tables, views, stored procedures, etcs.  
 Each secureable can have permissions.
 
 
 ## Roles
 You can assign multiple permissions to a role, and then give users a role.  
+
+### Server roles
+#### Fixed server roles
+- sysadmin: highest level that can do absolutely anything
+- serveradmin: can do most things, such as configure server, work with server processes
+- securityadmin: can work with logins, role memberships
+- processadmin: work with processes, stop/start service, change users' connectivity
+- setupadmin: add/remove features, server functionality
+- bulkadmin
+- diskadmin: alter resources
+- dbcreator: create any database
+- public: _everyone_ is a member of public. Any permission given to public, is given to everyone!
+
+#### User-defined server roles
+Create custom roles to group permissions.  
+1. Create server role
+2. Grant permissions to role (GRANT, REVOKE, DENY)
+3. Assign to logins (membership)
+
+More on creating server roles: https://docs.microsoft.com/en-us/sql/t-sql/statements/create-server-role-transact-sql?redirectedfrom=MSDN&view=sql-server-ver15
+
+### Database roles
+Most security permissions are set at the database level.  
+Basically, a database role is a grouping of database permissions, where users are added as member of a role.  
+
+#### Fixed database roles
+- dbo: database owner, can do anything within the database
+- dbreader: can read any data
+- dbwriter: can write any data
+- dbddladmin: can create objects in the database
+- dbaccessadmin: creates users
+- dbsecurityadmin: adds permissions
+- public: everyone is a member of public
+
+#### User-defined database roles
+Create roles using CREATE ROLE and give permissions using GRANT PERMISSION.  
+A role will have a role owner, specifed with `AUTHORIZATION owner_name`. The owner can be either a database user or another role. The owner is able to add or remove members of the role.
+
+
+#### Adding/Removing members from roles
+Traditionally, members were added or removed from roles using the stored procedures sp_addrolemember and sp_droprolemember. But these are now deprecated!  
+Use the ALTER ROLE statement  
+`ALTER ROLE role_name ADD MEMBER database_principal`  
+`ALTER ROLE role_name DROP MEMBER database_principal`  
+
+`DENY` is used to "revoke" permissions from a user if e.g. the user is in a role that has the permission.  
+`REVOKE` is used to remove both DENY and GRANT from user. 
 
 ## Firewalls
 When users connect, they first reach trhe SQL Database Firewall.  
@@ -40,6 +88,30 @@ Server-level firewall rules: allow access to all databases on the server
 Database-level firewall rules: allow access to a specific database  
 
 For more about SQL firewalls: https://docs.microsoft.com/en-us/azure/sql-database/sql-database-firewall-configure
+
+## Securing securables
+Examples:  
+`GRANT SELECT ON schema.someTable TO user/role`  
+`GRANT EXECUTE ON schema.someStoredProc TO user/role`  
+
+Note that column-level GRANT precedes table-level denies.   
+
+- GRANT: assigns some permission
+- WITH GRANT: assigns permission to give the same permission to others
+- DENY: denis the permission
+- REVOKE: removes the permission or DENY
+
+### Schemas to group secureables
+By creating schemas, you can easily manage permissions to everything inside the schema.  
+For instance:  
+`GRANT EXECUTE ON SCHEMA::SomeSchema TO user/role`
+`GRANT SELECT ON SCHEMA::SomeSchema TO user/role`  
+
+### Ownership chains
+You can grant SELECT permission on a view to a user, for tables that the user does not have access to, as long as the view and table owner is the same.  
+In this manner, you can carefully expose selected data, without granting access to the tables themselves.  
+
+More on ownerships: https://docs.microsoft.com/en-us/previous-versions/sql/sql-server-2008-r2/ms188676(v=sql.105)?redirectedfrom=MSDN
 
 ## Database access
 #### login 
