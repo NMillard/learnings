@@ -168,3 +168,37 @@ EXEC sp_addlinkedserver@server = 'RemoteServer',
 For this to work, the first server needs trusted delegation in Active Directory, and read and write abilities on the service principal name for both those instances.
 
 See this link for more https://docs.microsoft.com/en-us/archive/blogs/askds/understanding-kerberos-double-hop
+
+## Auditing
+
+SQL Server auditing  
+https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-database-engine?redirectedfrom=MSDN&view=sql-server-ver15  
+https://docs.microsoft.com/en-gb/azure/sql-database/sql-database-auditing 
+
+
+
+
+### Triggers
+ Use can set up auditing using triggers. A trigger is basically an observer you attach to your system, that will 'trigger'  based on actions, such as insert, update, delete. There's no  trigger for SELECT.
+
+Two types of triggers:  
+1. After command (default): triggers after an action is executed
+2. Instead-Of: triggers instead of the action that should have been executed
+
+```
+-- Example of After trigger
+
+CREATE TRIGGER tr_triggerName
+ON schemaName.tableName
+AFTER DELETE|UPDATE|INSERT
+BEGIN
+  -- What to do
+  -- you have access to the deleted|updated|inserted item using
+  -- FROM deleted|updated|inserted
+END
+```  
+
+More on triggers: https://docs.microsoft.com/en-us/sql/relational-databases/triggers/ddl-triggers?redirectedfrom=MSDN&view=sql-server-ver15
+
+### Audit actions and action groups
+Actions can be audited and grouped into action groups.
