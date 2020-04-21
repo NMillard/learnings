@@ -1,6 +1,7 @@
 # ASP.NET Authentication
 
 ## Identity
+Library: Microsoft.AspNetCore.Identity  
 
 Is a library provided by Microsoft  
 The aim of ASP.NET Core Identity is to be provid user-store and user-management capabilities

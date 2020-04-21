@@ -16,7 +16,7 @@ Mongodb's default data folder is called `mongodbfolder/data/db`.
 When the database folder exists, you can run `mongod` and it will spin up the server.   
 Default port is 27017.  
 
-### server configuration
+### Server configuration
 The server can be configured using a configuration file, which is a simple file with keypair values   
 ```
 # mongodb.conf <- file name
@@ -28,7 +28,7 @@ verbose=vvvvv # verbosity goes from 1-5 'v's.
 
 To use the configuration file on server startup, use `mongod -f c:/path/to/file/mongodb.conf`
 
-### install as start-up service
+### Install as start-up service
 _windows_   
 `mongod -f c:/path/to/file/mongodb.conf --install`
 `net start mongodb`  
@@ -70,3 +70,9 @@ services:
 ```  
 
 You can use the mongo shell by running `docker exec -it nameOfTheContainer mongo`.  
+
+## Connection string
+mongodb://[username:password@]:host:port
+
+## .NET library
+MongoDB.Driver

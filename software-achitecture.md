@@ -22,9 +22,9 @@ In domain-centric, the database (persistence) is simply an implementation detail
 
 There is a "generic" layout for domain-centric architectures, and it goes like:
 
-1. Domain
-2. Persistence
-3. Application
+1. Domain (The problem space)
+2. Persistence (Data storage)
+3. Application (Events and actions)
 4. User Interface (Presentation)
 
 The first being at the center and then moving outwards.
