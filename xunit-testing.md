@@ -97,3 +97,10 @@ Tests simplifies development because you won't have to run the whole application
 2. Write a test first - then the implementation   
 3. Write tests for all branches. For instance two tests if there's an if-statement in a method
 4. It's okay to let Fake methods return a value without doing anything
+
+Test units of behavior over units of implementation.
+
+### Behavior and State based testing
+
+**State**: Verify the state of an object after the 'act'.  
+**Behavior**: Verify if methods were called or propertes were accessed.  
