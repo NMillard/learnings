@@ -61,6 +61,10 @@ The typical solution structure
 - Domain
 - Application (with separation of e.g. front-end client, WebAPI, MessageQueue deamon, etc.)
 
+Folder structure may look like this:
+Root
+- src/projects
+- tests/test projects
 
 # Exception handling
 Only throw exceptions if something truely exceptional happend
