@@ -8,13 +8,9 @@ Tactical Design Patterns in .NET Control Flow and Making your C# Code More OO
 
 Avoid branching using IF-ELSE statements. Use conditionals to test conditions, and nothing else. But keep them out of client (calling) code.
 
-Even avoid the use of Guard clauses, where a condition is placed at the top of e.g. a method to test whether it should run or not.
-
 Use state objects to keep track of another object’s state. This is done using interfaces and creating state objects that implements the interface.
 
-However, don’t create interfaces just to allow building features in the calling classes. Let the implementing classes provide those features.
-
-Also, do implement special case objects.
+Also, do implement special case objects - e.g. null objects.
 
 ## Infrastructural Code
 

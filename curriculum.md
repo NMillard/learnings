@@ -1,33 +1,33 @@
 # .NET Core
 
 [x] C# Async programming  
-[X] ASP.NET Core Authentication  
+[x] ASP.NET Core Authentication  
 [x] Cryptography  
 [x] Software Architecture  
-[-] Security best practices  
-[] Azure Event Bus
-[] Azure BlobStorage
-[] RabbitMQ  
+[x] React  
+[x] SQL Security best practices  
+[x] Azure BlobStorage  
+[x] RabbitMQ  
+[x] DevOps  
+[] Azure Event Bus  
 [] Background workers  
-[] DevOps  
 [] CQRS  
 [] TypeScript  
-[] React  
-[] Front-end design
+[] Front-end design  
 [] CosmosDB
 
 # Project management
 
 [] Define scope  
 [] Stakeholder mapping  
-[] Write Statement of Work documents
+[] Write Statement of Work documents  
 
 # Self Assignments
 
-Some small coding projects that will teach some important lessons and functionality
+Some small coding projects that will teach some important lessons and functionality  
 
-[] Web app with real-time notifications  
-[] Web app that publishes events to a message queue  
-[] Web app showing a map that you can draw on  
-[] Web app - upload files and save using blob-storage  
+[x] Web app - upload files and save using blob-storage  
 [x] Web app that uses azure key vault
+[x] Web app with real-time notifications with SignalR  
+[x] Web app that publishes events to a message queue - rabbitMQ  
+[] Web app showing a map that you can draw on  
