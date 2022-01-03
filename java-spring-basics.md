@@ -1,5 +1,27 @@
 # Spring Boot Basics
 
+## Dependency Injection
+In Spring DI is also referred to as "Configuration" which is slightly misleading if you have a .NET background.  
+
+Spring uses a convention over configuration approach by utilizing "stereotypes". You wire up components by annoating them with `@Component`, `@Service`, and `@Repository`.  
+Or, you can use "configuration classes" that acts as a collection of factory methods for different types, such as the example below.  
+
+```java
+@Configuration
+public class LoggerConfiguration {
+
+    /** Get a new instance of Logger every time it's requested from the container
+     *  and instantiate it with the calling class as argument  */
+    @Bean
+    @Scope("prototype")
+    public Logger getLogger(InjectionPoint injectionPoint) {
+        return LoggerFactory.getLogger(injectionPoint.getMember().getDeclaringClass());
+    }
+}
+```
+
+Spring also auto-configures "beans" if they're found in the classpath. To see which configurations are applied start the application with `--debug` switch.
+
 ## Application Settings Configuration
 Prefer yaml-based configuration over the traditional key-pair style in application.properties. Any configuration that may be changed in any environment must be configurable from start
 
