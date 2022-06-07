@@ -2,50 +2,43 @@
 
 ## Courses
 
-Tactical Design Patterns in .NET Control Flow and Making your C# Code More OO
+Tactical Design Patterns in .NET Control Flow and Making your C# Code More OO.
 
 ## Branching
 
-Avoid branching using IF-ELSE statements. Use conditionals to test conditions, and nothing else. But keep them out of client (calling) code.
-
-Use state objects to keep track of another object’s state. This is done using interfaces and creating state objects that implements the interface.
-
-Also, do implement special case objects - e.g. null objects.
+Avoid branching using IF-ELSE statements. Use conditionals to test conditions, and nothing else. But keep them out of client (calling) code.  
+Use state objects to keep track of another object’s state. This is done using interfaces and creating state objects that implements the interface.  
+Also, do implement special case objects - e.g. null objects.  
 
 ## Infrastructural Code
 
-Wrap this code in separate objects – but only if it is likely to never change in the future.
-
-Loops themselves are infrastructure, and should not be displayed in business logic code. Operations inside the loop are the logic.
-
-Use Object substitution instead of conditional branch execution.
+Wrap this code in separate objects – but only if it is likely to never change in the future.  
+Loops themselves are infrastructure, and should not be displayed in business logic code. Operations inside the loop are the logic.  
+Use Object substitution instead of conditional branch execution.  
 
 ## Abstraction
 
-Abstract work away from the client calling the code – place in separate objects.
-
-Remove loops from calling code – place in separate objects that knows how to deal with the loops etc.
-
-Client code should only deal with customer requirements – all code that is concerned with supporting those requirements should go into separate objects.
-
-‘Never’ rely on concrete classes. ‘Always’ use interfaces.
+Abstract work away from the client calling the code – place in separate objects.  
+Remove loops from calling code – place in separate objects that knows how to deal with the loops etc.  
+Client code should only deal with customer requirements – all code that is concerned with supporting those requirements should go into separate objects.  
+‘Never’ rely on concrete classes. ‘Always’ use interfaces.  
 
 ## Dealing with Future Requirements
 
-Use strategy interfaces and objects to deal with volatile requirements – don’t change existing classes. Add one more class instead. Replace objects at run-time to select implementation of a requirement.
+Use strategy interfaces and objects to deal with volatile requirements – don’t change existing classes. Add one more class instead. Replace objects at run-time to select implementation of a requirement.  
 
-Generalize classes as much as possible.
+Generalize classes as much as possible.  
 
 ## Message Chaining
 
-A message-chain is when a class knows about another class’ collaborators, and make calls to those collaborators. This should be avoided.
-Fix by creating new methods on the immediate collaborator’s class that return values from its own collaborators.
+A message-chain is when a class knows about another class’ collaborators, and make calls to those collaborators. This should be avoided.  
+Fix by creating new methods on the immediate collaborator’s class that return values from its own collaborators.  
 
 ## Layered Achitecture
 
-Use layered architecture that will use the correct level of abstraction at each layer.
+Use layered architecture that will use the correct level of abstraction at each layer.  
 
-Layers may be (going from the calling client to the abstract)
+Layers may be (going from the calling client to the abstract)  
 
 Presentation layer (View)  
 Application layer (Controller)  

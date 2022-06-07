@@ -109,8 +109,8 @@ Steps to request authentication with external provider:
 1. Provide an endpoint that receives the name of the external provider, that the user would like to authenticate with
 2. Issue a challenge where scheme is defined as the name of the external provider
 
-```
-Example endpoint
+```C#
+//Example endpoint
 
 public class ExternalLoginModel {
   [Required] public string Provider { get; set; }
@@ -137,8 +137,8 @@ Steps to login the user after successful authentication:
 If you use ASP.NET Identity, you may need more steps inbetween step 3 and 4.  
 See example below
 
-```
-Example callback endpoint
+```c#
+//Example callback endpoint
 public async Task<IActionResult> ExternalLogin() {
     AuthenticateResult result = await HttpContext.AuthenticateAsync(IdentityConstants.ExternalScheme);
     var externalUserId = result.Principal.FindFirstValue("sub") ??

@@ -1,7 +1,9 @@
 # Spring Boot Basics
 
 ## Application Settings Configuration
-Prefer yaml-based configuration over the traditional key-pair style in application.properties. Any configuration that may be changed in any environment must be configurable from start
+Prefer yaml-based configuration over the traditional key-pair style in application.properties. Any configuration that may be changed in any environment must be configurable from start.  
+
+The application file is found in resources/application.yml.
 
 __Never__ include secrets in the configuration files.
 
@@ -112,3 +114,41 @@ public class RegisterParticipant {
     }
 }
 ```
+
+## Dates
+Avoid using the old, non-thread safe `Date`. Instead use types from java.time such as `LocalDate`, `LocalTime`, `Instant`.  
+
+
+## Optional (may return null)
+Use the `Optional<>` type to indicate a method may not return anything.
+
+
+## Spring WebFlux
+A reactive spring framework available from spring 5.x.  
+WebFlux offers an alternative programming model from the traditional spring MVC. WebFlux operates on reactive streams and are by nature async.
+
+The whole stack has to be reactive, so you can't mix regular, blocking code with WebFlux.
+
+## Testing
+
+### Testing Spring endpoints
+
+You can create test classes that are annotated as demonstrated below.  
+
+```java
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
+@AutoConfigureMockMVc
+class SomeTest {
+    @MockBean
+    private SomeServiceClass service;
+
+    @Autowired
+    private MockMvc mvc;
+}
+```
+
+Use the `mvc` field to test endpoints and `hamcrest` result matchers to verify the response.
+
+Use `Mockito` for mocking interfaces and abstract classes.  
+- Prefer the `doReturn/when` over `when/thenReturn` approach.

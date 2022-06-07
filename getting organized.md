@@ -15,6 +15,8 @@ Follow this structure when opening a metting.
    Be upfront with what the expected outcome will be. In that way, everyone
    will have a frame of reference.
 
+## Communication
+
 ## Analysis
 
 ### SCQA

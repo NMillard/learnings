@@ -10,7 +10,7 @@ Software architecture is
 
 ## Clean Architecture
 
-Ìs layered and easily understood and testable.
+Is layered and easily understood and testable.
 Is designed for the "inhabitants" of the system
 Is focused only on the essential, avoiding premature optimization.
 Is aligned with business goals.

@@ -15,7 +15,37 @@ Example of host path to container path mapping
 `--mount type=volume,source=/c/path,target=/var/app`
 
 ## The Dockerfile
-File to build images
+File to build images. Provide the step-by-step build and publish process.  
+See example of how to create an aspnetcore docker image below.
+
+```dockerfile
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /app
+COPY *.csproj .
+RUN dotnet restore
+
+COPY . .
+RUN dotnet build -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "DockerizedAspNetCore.dll"]
+
+```
+
+## Container registry
+A place to store, share and pull built images.  
+
+Push an image with `docker image push <hub-id>/<repo-name>:<version>`.
 
 ## The docker-compose.yml file
 Define service orchestration
