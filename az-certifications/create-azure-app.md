@@ -106,4 +106,5 @@ Continuous deployment also requires a build server. The simplest option is to us
 
 ## Scaling Azure App Services
 Vertical scaling: upping the compute power of a single app service, e.g. buy more RAM, CPU cores, etc.
-Horizontal scaling: traditionally done by provisioning a load balancer and connect multiple VMs to it.
+Horizontal scaling: traditionally done by provisioning a load balancer and connect multiple VMs to it. Production grade app service plan supports horizontal scaling and there's an implicit load balancer.  
+Horizontal scale can happen manually and based on a time schedule or metrics.
