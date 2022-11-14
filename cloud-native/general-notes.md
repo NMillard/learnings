@@ -53,6 +53,40 @@ Azure Kubernetes Service (AKS)
 Short for "Distributed Application Runtime", a framework for building protable and reliable microservices.
 Dapr is not language-specific and uses sidecars and can run in two modes: 1) self-hosted or kubernetes.
 
+**Building blocks**:  
+- State management
+- Service to service invocation
+- Pub-sub messaging
+- Accessing secrets
+- Bindings
+- Observability
+
+The sidecar approach is beneficial because it makes the sidecars talk to one another rather than the actual services.  
+This means, we can get autoamtic retries, mTLS encryption, access control policies, tracing and metrics out of the box.
+
+**Running on Kubernetes**  
+Often used for production and requires you to install Dapr on the cluster.  
+Requires microservices to be annotated in a special way to allow the Dapr Runtime to automatically create the sidecars.
+
+**Sidecars**  
+Each sidecar needs to bind to separate ports and can be interacted with through HTTP requests.  
+A sidecar URL might look like `http://localhost:3500/v1.0/state/statestore` to access the default redis store.
+
+### Getting started with Dapr
+1. Install the Dapr CLI, e.g. `brew install dapr/tap/dapr-cli`
+2. Install the Dapr Runtime by running `dapr init`. Installing it locally requires docker to be installed.
+
+Installing the runtime locally creates a dapr deamon (daprd) and adds it to your path.
+
+You can add a script like this to your application.
+```bash
+dapr run \
+  --app-id frontend \
+  --app-port 5266 \
+  --dapr-http-port 3500 \
+  dotnet run
+```
+
 https://learn.microsoft.com/en-us/azure/container-apps/dapr-overview?tabs=bicep1%2Cyaml
 
 ## Continous Deployment
