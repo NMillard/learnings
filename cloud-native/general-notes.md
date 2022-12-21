@@ -64,6 +64,9 @@ Dapr is not language-specific and uses sidecars and can run in two modes: 1) sel
 The sidecar approach is beneficial because it makes the sidecars talk to one another rather than the actual services.  
 This means, we can get autoamtic retries, mTLS encryption, access control policies, tracing and metrics out of the box.
 
+### Running locally
+Use Docker Compose to run the setup locally.
+
 **Running on Kubernetes**  
 Often used for production and requires you to install Dapr on the cluster.  
 Requires microservices to be annotated in a special way to allow the Dapr Runtime to automatically create the sidecars.
