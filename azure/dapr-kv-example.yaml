@@ -1,0 +1,14 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: secrets
+spec:
+  type: secretstores.azure.keyvault
+  version: v1
+  metadata:
+  - name: vaultName # Required
+    value: nicmenvkeyvault
+  - name: azureEnvironment
+    value: "AZUREPUBLICCLOUD"
+  - name: azureClientId # Only client id is used when authenticating with a managed identity
+    value: 83c778a5-02a5-4168-968c-38d4f25ca8ec
