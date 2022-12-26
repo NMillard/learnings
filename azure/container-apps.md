@@ -107,9 +107,48 @@ az postgres server firewall-rule create -g $RG \
 --end-ip-address $ENV_IP
 ```
 
-## Useful commands
-- Get a containers endpoint: `az containerapp show -g "resourge-group" -n "app name" --query properties.configuration.ingress.fqdn -o tsv`
-- Add environment variable to existing revision (will perform restart): `az containerapp update -n $CONAINER_NAME -g $RG --set-env-vars 'some__value=whatever'`
+## Connecting to a keyvault
+1. Create the keyvault using the following command
+```bash
+az keyvault create -g $RG \
+-n $KEYVAULT_NAME \
+--sku Standard \
+--enable-rbac-authorization true
+--location $LOCATION
+```
+
+2. Add reader role to a managed identity that is assigned to the containerapp
+```bash
+IDENTITY_ID=$(az identity show -g $RG -n $IDENTITY_NAME --query principalId -o tsv)
+AZ_KEYVAULT_ID=$(az keyvault show -g $RG -n $KEYVAULT_NAME --query id -o tsv)
+KV_READER_ROLE=21090545-7ca7-4776-b22c-e363652d74d2
+
+az role assignment create --assignee-object-id $IDENTITY_ID \
+--role $KV_READER_ROLE \
+--scope $AZ_KEYVAULT_ID \
+--assignee-principal-type ServicePrincipal
+```
+
+3. Add the keyvault as a dapr secret store component
+Run `az identity show -g $RG -n $IDENTITY_NAME -o jsonc` to get all the required values for the yaml component definition.
+```yaml
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: secrets
+spec:
+  type: secretstores.azure.keyvault
+  version: v1
+  metadata:
+  - name: vaultName # Required
+    value: nicmenvkeyvault
+  - name: azureEnvironment
+    value: "AZUREPUBLICCLOUD"
+  - name: azureTenantId
+    value: 5a9f5d9b-d431-4de6-98d7-6c3813796ba5
+  - name: azureClientId
+    value: 83c778a5-02a5-4168-968c-38d4f25ca8ec
+```
 
 ## Side notes
 Solving the resource service connection for a new containerapp.
@@ -124,17 +163,21 @@ To solve this, you will have to
 3. Run the `up` command specifying your own image and use the secret generated from the service connection.
 
 
+## Useful commands
+- Get a containers endpoint: `az containerapp show -g "resourge-group" -n "app name" --query properties.configuration.ingress.fqdn -o tsv`
+- Add environment variable to existing revision (will perform restart): `az containerapp update -n $CONAINER_NAME -g $RG --set-env-vars 'some__value=whatever'`
+
 
 ## Links
-- https://learn.microsoft.com/en-us/azure/container-apps/communicate-between-microservices?tabs=bash&pivots=acr-remote
-- https://learn.microsoft.com/en-us/dotnet/architecture/dapr-for-net-developers/
+- [Communication between microservices in Azure Container Apps](https://learn.microsoft.com/en-us/azure/container-apps/communicate-between-microservices?tabs=bash&pivots=acr-remote)
+- [Build and deploy a Python web app with Azure Container Apps and PostgreSQL](https://learn.microsoft.com/en-us/azure/developer/python/tutorial-deploy-python-web-app-azure-container-apps-02?tabs=azure-cli%2Ccreate-database-psql)
+- [Deploy a Dapr application to Azure Container Apps using the Azure CLI](https://learn.microsoft.com/en-us/azure/container-apps/microservices-dapr?tabs=bash)
+- [Dapr for .NET Developers, MSDN](https://learn.microsoft.com/en-us/dotnet/architecture/dapr-for-net-developers)
+- [Dapr integration with Azure Container Apps, MSDN](https://learn.microsoft.com/en-us/azure/container-apps/dapr-overview?tabs=bicep1%2Cyaml)
 - https://gist.github.com/MauricioMoraes/87d76577babd4e084cba70f63c04b07d
-- https://learn.microsoft.com/en-us/azure/developer/python/tutorial-deploy-python-web-app-azure-container-apps-02?tabs=azure-cli%2Ccreate-database-psql
-- https://learn.microsoft.com/en-us/azure/container-apps/microservices-dapr?tabs=bash
 - https://github.com/MicrosoftDocs/azure-dev-docs/blob/main/articles/java/spring-framework/migrate-postgresql-to-passwordless-connection.md
 
 ## Tutorial - a refresher
-
 Create resouce group  
 `az group create -g my-environment --location westeurope`
 
