@@ -7,6 +7,7 @@ Benefits of K8S:
 - Ability to absorb change quickly
 - Ability to recover quickly
 - Hide infrastructure complexity in the cluster
+- Environment concistency
 
 Principles of K8S:
 - Desired state/Declarative configuration
@@ -46,7 +47,7 @@ Define persistent volume claim in the Pod definition, e.g. "this pod need 10GB o
 ## Kubernetes architecture
 
 ### Control plane node
-Major control function of a cluster.
+Major control function of a cluster.  
 - Has an API server: Main access point for cluster administration. This is the communication hub for the k8s cluster. Runs on port 6443.
 - Cluster store: `etcd` is responsible for storing the cluster objects' state. Runs on port 2379-2380 and is used by the API server.
 - Scheduler: tells which nodes to start pods on. Runs on port 10251.
