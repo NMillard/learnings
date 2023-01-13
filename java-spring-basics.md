@@ -161,6 +161,7 @@ You can create test classes that are annotated as demonstrated below.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMVc
+@EnableWebMvc // <- Enables component scanning - would otherwise run into hard-to-debug issues with unsupported media type
 class SomeTest {
     @MockBean
     private SomeServiceClass service;
