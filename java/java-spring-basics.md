@@ -186,10 +186,10 @@ If you have a custom type that you'd want to bind in a controller action, that i
 Let's say you have this class and you'd like to map it's properties to request headers.
 ```java
 public class TraceContext {
-    private UUID transaktionsId;
+    private UUID transactionId;
     private UUID requestId;
 
-    public TraceContext(UUID transaktionsId, UUID requestId) {
+    public TraceContext(UUID transactionId, UUID requestId) {
         // set fields
     }
 
@@ -199,7 +199,7 @@ public class TraceContext {
 
 We'd then define a controller action like so:
 ```java
-public ResponseEntity<EjersEjendommeResponse> getEjersEjendomme(TraceContext context) {
+public ResponseEntity<SomeResponse> doAction(TraceContext context) {
     // logic
 }
 ```
@@ -209,7 +209,7 @@ We'll need to create e.g. an annotation that we'll use on the argument, and then
 
 ```java
 // Modified controller action
-public ResponseEntity<EjersEjendommeResponse> getEjersEjendomme(@WebTrace TraceContext context) {
+public ResponseEntity<SomeResponse> doAction(@WebTrace TraceContext context) {
     // logic
 }
 
@@ -251,10 +251,10 @@ class TraceContextArgumentResolver implements HandlerMethodArgumentResolver {
                                   ModelAndViewContainer mavContainer,
                                   NativeWebRequest webRequest,
                                   WebDataBinderFactory binderFactory) {
-        var transaktionsId = webRequest.getHeader("header-name");
+        var transactionId = webRequest.getHeader("header-name");
         var requestId = webRequest.getHeader("other-header-name");
 
-        return new TraceContext(transaktionsId, requestId);
+        return new TraceContext(transactionId, requestId);
     }
 }
 ```
