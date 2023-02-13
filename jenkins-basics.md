@@ -98,6 +98,21 @@ pipeline {
 }
 ```
 
+## Reading environment variables
+Install the Jenkins Pipeline Utility Steps plugin. This provides lots of functionality to read external files, that is, files external to the source code, and even `pom.xml` properties, which can be quite useful.
+
+However, it's not recommended to read the `pom.xml` using `readMavenPom`.
+
+With maven projects, you can get properties from the `pom.xml` by running the `mvn help:evaluate` goal. 
+
+Say you need the build numer as an environment variable, then you can do something like below.
+
+```gradle
+environment {
+  BUILD = sh script: './mvnw help:evaluate -Dexpression=build.version -q -DforceStdout', returnStdout: true
+}
+```
+
 ## Using credentials
 You can set credentials on Jenkins in the "Manage Jenkins -> Manage Credentials" section.
 Say you setup a credentials username and password set with the credentials ID=`artifactory-registry`
