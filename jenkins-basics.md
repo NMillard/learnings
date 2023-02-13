@@ -1,5 +1,7 @@
 ## General
-As a DevOps "engineer", you wouldn't want to make code changes to have the code built and deployed.
+As a DevOps engineer, you wouldn't want to make code changes to have the code built and deployed. Use declarative pipelines instead of click-ops.
+
+You can install the Blue Ocean plugin for a modern look and feel.
 
 ## GitHub
 Generate a github access token and add it to Jenkins with the Jenkins Credentials Provider, as Secret Text kind
