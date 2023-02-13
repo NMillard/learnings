@@ -121,3 +121,48 @@ pipeline {
 Notice how the username and password are referenced by prepending `_USR` and `_PSW` to the credentials variable.
 
 Read more about [credentials here](https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#usernames-and-passwords).
+
+
+## Running SonarQube
+To use a quality gate step like sonarqube, you need to install the SonarQube for Jenkins plugin.
+
+In a Spring based project, you'll then need the sonarqube maven plugin. There's really not much setup to do besides knowing that the sonarqube plugin looks for a few variables:
+- sonar.host.url: where the sonarqube server is located (e.g. http://localhost:9000 or some docker address like http://172.17.0.7:9000)
+- sonar.projectKey: the project id in sonarqube
+- sonar.login: a secret token, typically set in your `~/.m2/setting.xml` or in the environment.
+
+```gradle
+stage('Quality check') {
+    steps {
+        withSonarQubeEnv("SonarQube") {
+            sh "./quality-check.sh $SONAR_URL"
+        }
+    }
+}
+stage ("Wait for quality check") {
+    steps {
+        timeout(time: 1, unit: 'HOURS') {
+            waitForQualityGate abortPipeline: true
+        }
+    }
+}
+```
+
+
+```xml
+<!--In the pom.xml-->
+<properties>
+    <java.version>17</java.version>
+    <sonar.projectKey>${project.artifactId}</sonar.projectKey>
+    <sonar.host.url>http://localhost:9000</sonar.host.url>
+    <sonar.login>${env.SONAR_TOKEN}</sonar.login>
+</properties>
+
+<plugin>
+    <groupId>org.sonarsource.scanner.maven</groupId>
+    <artifactId>sonar-maven-plugin</artifactId>
+    <version>3.9.1.2184</version>
+</plugin>
+```
+
+Then, in the Jenkins dashboard, go to Manage Jenkins -> Configure System and set the SonarQube Servers name and Server URL with an authentication token.
