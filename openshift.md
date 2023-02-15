@@ -71,3 +71,5 @@ Then, the secret needs to be connected to your service account to pull images us
 - https://github.com/eclipse/jkube/tree/master/quickstarts/maven/spring-boot/
 - https://github.com/eclipse/jkube/tree/master/quickstarts/maven/spring-boot-with-jib/
 - https://docs.openshift.com/container-platform/4.5/openshift_images/managing_images/using-image-pull-secrets.html#images-allow-pods-to-reference-images-from-secure-registries_using-image-pull-secrets
+- https://developers.redhat.com/articles/2022/03/01/package-and-run-your-java-maven-application-openshift-seconds#deploy_the_application_to_openshift
+- https://docs.openshift.com/container-platform/4.9/authentication/using-service-accounts-in-applications.html
