@@ -63,5 +63,18 @@ Define service orchestration
 Multi-host networking with overlay driver is used to connect multiple computer to one network.
 To create a swarm, ports 4789/UDP, 7946/TCP/UDP, and 2377/TCP must be open
 
-## Docker on Windows Server
-Install docker using PowerShell
+
+## Pushing images
+After bulding a docker image (OCI), you can push the image to a docker registry, such as docker hub, artifactory, etc.
+
+Docker uses several environment variables to authenticate with a Docker registry when pushing images.
+
+These environment variables are used to authenticate with a Docker registry when pushing images. The following are the main environment variables used by Docker to authenticate with a Docker registry:
+
+- `DOCKER_REGISTRY_SERVER`: The URL of the Docker registry to push the image to.
+- `DOCKER_USERNAME`: The username used to authenticate with the Docker registry.
+- `DOCKER_PASSWORD`: The password used to authenticate with the Docker registry.
+- `DOCKER_EMAIL`: The email address associated with the Docker registry account.
+- `DOCKER_AUTH`: A base64-encoded string containing the DOCKER_USERNAME DOCKER_PASSWORD, and DOCKER_EMAIL values.
+
+It's important to note that these environment variables should be set in a secure manner, as they contain sensitive information. For example, they should not be hardcoded in scripts or stored in plain text files on disk.
