@@ -181,3 +181,5 @@ stage ("Wait for quality check") {
 ```
 
 Then, in the Jenkins dashboard, go to Manage Jenkins -> Configure System and set the SonarQube Servers name and Server URL with an authentication token.
+
+On the SonarQube side, you need to set up a webhook that sends the run report back to Jenkins. The webhook url is: `<your_jenkins_instance>:port/sonarqube-webhook/`
