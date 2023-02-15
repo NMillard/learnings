@@ -41,6 +41,15 @@ Some of these commands need a bit more details before they work, as outlined in 
 ### Preconditions
 Make sure to run the `oc login` CLI on the machine that needs to apply the deployment specification. This stores the login information in `~/.kube/config.json`, which contains the authentication token along with some cluster information.
 
+Or, they can be set programmatically in the `pom.xml`.
+```xml
+<properties>
+    <kubernetes.master>${env.OPENSHIFT_URL}</kubernetes.master>
+    <kubernetes.auth.token>${env.OPENSHIFT_NAMESPACE}</kubernetes.auth.token>
+    <kubernetes.namespace>${env.OPENSHIFT_TOKEN}</kubernetes.namespace>
+</properties>    
+```
+
 Also, if you're using a private docker registry, then the Openshift instance needs to have a special docker registry secret created.
 
 ### Creating docker registry secret on openshift
