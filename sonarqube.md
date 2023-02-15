@@ -52,3 +52,7 @@ You can use the `.m2/settings.xml` to override the `sonar.login` locally.
     </profiles>
 </settings>
 ```
+
+## Notifying quality gate status
+You can setup a webhook where the quality gate report is sent to.
+When using Jenkins, you need to send the report to `<jenkins_host_name>:port/sonarqube-webhook/`
