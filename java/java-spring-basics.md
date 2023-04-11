@@ -158,7 +158,6 @@ The whole stack has to be reactive, so you can't mix regular, blocking code with
 You can create test classes that are annotated as demonstrated below.
 
 ```java
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMVc
 @EnableWebMvc // <- Enables component scanning - would otherwise run into hard-to-debug issues with unsupported media type
