@@ -28,8 +28,7 @@ External Providers
   Username, password, two-factor keys
 - Personal information
   Name, gender
-- What you are
-  Roles, etc.
+- What you are: roles, etc.
 
 Identity does not equal permissions.  
 Identity is transient of applications whereas permissions are application specific
