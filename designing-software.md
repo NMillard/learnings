@@ -11,6 +11,11 @@ No guessing. No, what the f-moments. Just lots of positive surprises.
 
 You'll notice that you're asking yourself, "can it really be that easy?" And yes, yes, it can.
 
+---
+
+The following concepts have served me well when designing software and reviewing others' code. It provides a nice,
+practical foundation to ground your arguments in real-life experiences and best practices.
+
 ## Identify SOLID violations
 
 - Code Fragility<br/>
@@ -35,22 +40,32 @@ It's fine to call methods on collaborating classes, but never to access internal
 
 Luckily, there's an easy fix. Create methods on immediate collaborators that return values from its own collaborators.
 
+## Set clearly defined scopes
+
+Not every application, module, or class is created equal. Be explicit about a module's scope. Is it used as part of a
+framework? Do other developers need to instantiate it? Is it a building block in a larger setup? Is it long or
+short-lived? Is it client-facing and thereby public or purely internal to the module?
+
+Knowing the answer to each and every of these questions lets you design better software.
+
 ## Duplication
 
 There's a general rule of thumb that writing the same piece of code twice may be okay, but no more than that. However,
-there are some things that shouldn't be consolidated into sharable code:
+there are some things that shouldn't be consolidated into shared code:
 
 - Domain specifics<br/>
   Keep domain-specific code in its correct place. Just because two separate services or applications need a `User` class
   it doesn't necessarily mean the `User` should be packaged in a separate project and shared between the services.
+
 - Temporal similarities<br/>
   Sometimes you will see code that is identical in two different places. The junior developer will quickly refactor
   this, and often leads to static helpers, and so on. But many duplications are only temporal, and it makes sense to
   keep two--though identical--separate implementations.
+
 - Fields and properties<br/>
-  It's common to have many classes that share common traits and thereby have the same fields and properties--sadly, this
+  It's normal to have many classes that share common traits and thereby have the same fields and properties--sadly, this
   also leads to base classes that are nothing more than glorified property bags. Opt for duplication over inheritance if
-  there's no real `is-a` relationship.
+  one class can't be a direct substitute for the base type.
 
 ## Manage orchestrations
 
@@ -58,7 +73,7 @@ We see orchestrations happening in many `Service` classes. They take a bunch of 
 interaction. E.g., fetch an object from the database, pass it to another object, inspect the result, maybe run some
 business logic, and then return a result.
 
-Orchestrators often need to notify other services that something happened, and take each service as a dependency. This
+Orchestrators often take a dependency on other services solely to notify them that something happened. This
 coupling can be eliminated just by publishing an event and let interested services listen to that event.
 
 ## Managing constructor dependencies
@@ -67,9 +82,23 @@ Inversion of control combined with dependency injection is an immensely valuable
 constructor bloat if you're not careful.
 
 I often see classes that take dependencies through the constructor, and only use the dependency in a single method. In
-this case, consider moving the dependency from the constructor to the method argument instead.
+this case, consider moving the dependency from the constructor to the method argument instead--or, even better, perform
+a class extract refactoring, by creating a new class with a single method and constructor dependency.
 
-## Avoid Util and Helper classes
+## Lean over fat interfaces
+
+Prefer to have many lean interfaces over a few fat ones. A lean interface has a defined scope, few methods, and high
+cohesion. You can often spot poorly designed interfaces by:
+
+- Having many unrelated methods.
+- Implementing classes throws an exception rather than implementing the method,
+- or has an empty method body.
+- Client classes have access to irrelevant methods that come with the bloated interface.
+
+It's better to have many smaller interfaces, even if there's only one class implementing them all. It allows for future
+flexibility and adaptability.
+
+## Avoid Util and Helper classes entirely
 
 Creating Utility and Helper classes is nearly always a poor practice, and a symptom of an ineffective architecture or
 facile design efforts.
@@ -78,7 +107,10 @@ Modules using Utility and Helper classes become highly coupled with the internal
 implementations. Utility and Helper classes are ever-growing and generally have many reasons to change. Changes that
 cause ripples throughout the codebase.
 
-## Allowing things to change
+If you find yourself relying on utility and helper classes, you should consider taking a step back, analyze why you need
+them and how you can get your codebase's health back on track.
+
+## Allow things to change
 
 Classes should be open for extension but closed for modification, as in accordance with the Open-Closed principle. This
 principle goes hand-in-hand with dependency injection and inversion of control.
@@ -103,6 +135,24 @@ By doing this, you'll:
 - Bettering the developer experience by letting the developer focus on abstractions' intent rather than all the concrete
   implementations.
 
+## Shield off external changes
+
+Don't let third-party changes drip into your codebase. Create an anti-corruption layer around your domain and
+application code by having specialized data-transfer objects at the border of your application.
+
+This is typically done by having one or more interfaces that dictate the interaction with external systems. This allows
+you to easily create a new concrete implementation in case of changes to the external system.
+
+The anti-corruption layer should be in place anywhere you receive unmanaged data into your application. This gives you
+time to:
+
+- **inspect** what the data looks like,
+- **validate** its correctness according to your expectations,
+- and **decide** if the data should make its way into your application, by being mapped to domain classes.
+
+Not only does this allow you to isolate your application from unwanted changes, but it also allows you to mock external
+calls and interactions. This makes unit testing easier and more reliable.
+
 ## Managing validation rules
 
 It's incredibly common in business-line applications to have a series of business rules that needs to be validated as
@@ -116,15 +166,12 @@ Each rule becomes a class in its own right, ideally performing only a single val
 Don't fear having lots of classes with a single responsibility. Fear having a single class with lots of
 responsibilities.
 
-## Set clearly defined scopes
+## Apply adhoc polymorphism
 
-Not every application, module, or class is created equal. Be explicit about a module's scope. Is it used as part of a
-framework? Do other developers need to instantiate it? Is it a building block in a larger setup? Is it long or
-short-lived? Is it client-facing and thereby public or purely internal to the module?
+While real object polymorphism is great and allows for concise code, don't forget about adhoc polymorphism; that is
+method overloading and overriding.
 
-Knowing the answer to each and every of these questions lets you design better software.
-
-## Intention-revealing names
+## Use intention-revealing names
 
 We've all noticed just how hard it is to name things. Admittedly, we sometimes resort to the "quick" and "safe" naming
 strategy, such as appending `Handler`, `Service`, and `Manager` to any class and hope our fellow craftsmen know what we
@@ -132,3 +179,14 @@ meant.
 
 Names such as `Handler`, `Service`, and `Manager` denotes a broad range of categories, and are mostly too abstract to be
 actually helpful five years down the line.
+
+## Perfectly documented code
+
+There's just something about code that has high quality documentation. It's neat and it speeds up development
+tremendously.
+
+Imagine learning ASP.NET or React without using their documentation sites or reading the accompanying code
+documentation. Good luck. You'll probably get absolutely nowhere.
+
+High-quality code documentation strikes a balance between brevity and clarity. It covers the most common use cases and
+may even explain _why_ it exists.
