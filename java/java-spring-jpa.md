@@ -32,6 +32,94 @@ spring:
 
 Then you're ready to create repositories. No need to reiterate how it's done as this guide provides enough information: https://docs.spring.io/spring-data/jpa/docs/current/reference/html/
 
+## Entity Manager and Repositories
+Having a dependency on JPA allows you to fetch data using the `EntityManager` class and the `JpaRepository<>` interfaces.
+
+Say we have an entity like this, with all the required annotations.
+
+```java
+@Entity
+@Table(name = "employees", schema = "demo")
+public class Employee {
+
+    protected Employee() {} // to make JPA happy
+
+    @Id
+    private UUID id;
+
+    @Column(name = "fullname", nullable = false)
+    private String name;
+
+    @ColumnTransformer(write = "?::json")
+    @Column(nullable = false, columnDefinition = "json")
+    private String preferences; // Say we store the preferences as JSON 
+
+    @Column
+    @Convert(converter = LongListConverter.class) // we'll get to this soon
+    private List<Long> phoneNumbers; // Image these are stored as comma-delimited text in one column
+
+    // Getters, setters, etc...
+}
+```
+Now, this employee type is almost fully ready to be queried and persisted with JPA. We just need to implement a few more classes.  
+We have a list of phonenumbers stored as text in the database, but in Java that column is converted to a list of `Long`. So, we need a converter for this.
+
+```java
+@Converter
+public class LongListConverter implements AttributeConverter<List<Long>, String> {
+    @Override
+    public String convertToDatabaseColumn(List<Long> attribute) {
+        boolean noValue = attribute == null || attribute.isEmpty();
+        if (noValue) return null;
+
+        return attribute.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(","));
+    }
+
+    @Override
+    public List<Long> convertToEntityAttribute(String dbData) {
+        boolean noValue = dbData == null || dbData.isEmpty();
+        if (noValue) return new ArrayList<>();
+
+        return Arrays.stream(dbData.split(","))
+                .map(Long::valueOf)
+                .toList();
+    }
+}
+```
+
+This allows us to both query and persist that list without problems.
+
+To perform database operations on this `Employee` entity, we'll create an interface. I've added a few custom queries to the interfaces, just to demonstrate some techniques beyond the very basics.
+
+```java
+@Repository
+interface JpaEmployeeRepository extends JpaRepository<Employee, UUID> { 
+
+    // Simple "where" query.
+    @Query("select e from Employee e where e.name = :name")
+    List<Employee> simpleWhere(@Param("name") String name);
+
+    @Query("""
+            select e from Employee e
+            where e.name = :#{search.name}
+            and e.phoneNumbers in :#{search.phoneNumbers}
+            """)
+    List<Employee> usingObjectWhere(@Param("search") SearchCriteria search);
+}
+
+class SearchCriteria {
+    private String name;
+    private List<Long> phoneNumbers;
+
+    // getters, setters...
+}
+```
+
+There's created a concrete class behind the scenes at runtime.
+
+
 ## Migrations
 Add migrations functionality using flyway. An easy to use migrations library.
 
@@ -63,7 +151,8 @@ spring:
 
 ## Testing
 
-Best practice is to _not_ rely on mocks for database interactions tests. Instead, spin up database containers and connect to them in order to use real SQL queries in tests.
+Best practice is to _not_ rely on mocks for database interactions tests. Instead, spin up database containers and connect to them in order to use real SQL queries in tests.  
+However, when you experiment, you'd rather want to use a container that doesn't shut down once the test exits. We'll look at this scenario soon.
 
 Add the following dependencies to the pom.
 ```xml
@@ -211,12 +300,37 @@ class SomeControllerTest extends InitializedDatabase { // Extend the new class
 
 ```
 
-Remember to add the junit testcontainers dependency.
-```xml
-<dependency>
-    <groupId>org.testcontainers</groupId>
-    <artifactId>junit-jupiter</artifactId>
-    <version>1.18.1</version>
-    <scope>test</scope>
-</dependency>
+## Experimenting using a real database
+Using testcontainers allows you to run the tests with a real database in a build environment. But, you'll most often be experimenting a lot, so, you need to connect to a local database, and have state persisted even when the tests exit.
+
+The approach is much like with testcontainers.
+
+First, create a dedicated application yaml file that is used only for experimentations. This shouldn't be added to git.
+
+```yaml
+# ./src/test/resources/application-local.yml
+spring:
+  datasource:
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/postgres
+```
+
+Then add the test class itself.
+
+```java
+@ActiveProfiles("local")
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@EnableAutoConfiguration
+@ContextConfiguration(classes = { // The classes that are added to the dependency container
+        YouRepository.class,
+})
+@EntityScan(basePackageClasses = {/*specific classes in the main project if needed*/})
+@Transactional(propagation = Propagation.NOT_SUPPORTED) // Allows you to persist state after text is done 
+class EjerskifteHandlerTest {
+
+    @Autowire
+    YouRepository repository;
+}
 ```
