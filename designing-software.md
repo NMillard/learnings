@@ -18,6 +18,11 @@ practical foundation to ground your arguments in real-life experiences and best 
 
 ## Identify SOLID violations
 
+It seems to have become a trend to bash on SOLID, a battle-tested, (almost) multi-decade old collection of design practices.
+Criticism aimed at SOLID is typically in the ballpark of "it leads to over-engineering," or "it creates overly abstract
+code." While that may be occasionally true, knowing when you're violating SOLID principles can help you
+enormously.
+
 - Code Fragility<br/>
   Software breaks in many places with every change. Unrelated parts of the project start to behave differently when a
   change is introduced.
@@ -74,7 +79,7 @@ interaction. E.g., fetch an object from the database, pass it to another object,
 business logic, and then return a result.
 
 Orchestrators often take a dependency on other services solely to notify them that something happened. This
-coupling can be eliminated just by publishing an event and let interested services listen to that event.
+coupling can be eliminated just by publishing an in-process event and let interested services listen to that event.
 
 ## Managing constructor dependencies
 
@@ -151,7 +156,7 @@ time to:
 - and **decide** if the data should make its way into your application, by being mapped to domain classes.
 
 Not only does this allow you to isolate your application from unwanted changes, but it also allows you to mock external
-calls and interactions. This makes unit testing easier and more reliable.
+calls and interactions, making unit testing easier and more reliable.
 
 ## Managing validation rules
 
