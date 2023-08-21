@@ -166,7 +166,7 @@ part of a business policy.
 Say, our business has a policy that says "all usernames must be valid," and then we have a bunch of business rules that
 checks username validity.
 
-Each rule becomes a class in its own right, ideally performing only a single validation check and returns a result.
+Each rule becomes a class in its own right, ideally performing only a single validation check and returns a result. So, we'll have the following player categories (classes): `Policy`, `Rule`, and `ValidationError`.
 
 Don't fear having lots of classes with a single responsibility. Fear having a single class with lots of
 responsibilities.
