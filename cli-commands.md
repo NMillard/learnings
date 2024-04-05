@@ -1,6 +1,11 @@
 # Command-line programs
 A list of useful CLI programs for my own memory.
 
+## security (on MacOS)
+Trust a certificate.
+
+`security add-trusted-cert -p basic -p ssl -k <<login-keychain>> <<certificate>>'`
+
 ## dd
 Convert and copy a file.  
 Useful when you need to extract a part of a file into another. E.g. read the first 5mb of a large json file and dump it into a new file.

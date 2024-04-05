@@ -144,11 +144,11 @@ spec:
     value: nicmenvkeyvault
   - name: azureEnvironment
     value: "AZUREPUBLICCLOUD"
-  - name: azureTenantId
-    value: 5a9f5d9b-d431-4de6-98d7-6c3813796ba5
   - name: azureClientId
-    value: 83c778a5-02a5-4168-968c-38d4f25ca8ec
+    value: <client id>
 ```
+
+Read more about the azure containerapp dapr schema here: https://learn.microsoft.com/en-us/azure/container-apps/dapr-overview?tabs=bicep1%2Cyaml#component-schema
 
 ## Side notes
 Solving the resource service connection for a new containerapp.

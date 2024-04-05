@@ -62,7 +62,7 @@ Dapr is not language-specific and uses sidecars and can run in two modes: 1) sel
 - Observability
 
 The sidecar approach is beneficial because it makes the sidecars talk to one another rather than the actual services.  
-This means, we can get autoamtic retries, mTLS encryption, access control policies, tracing and metrics out of the box.
+This means, we can get automatic retries, mTLS encryption, access control policies, tracing and metrics out of the box.
 
 ### Running locally
 Use Docker Compose to run the setup locally.

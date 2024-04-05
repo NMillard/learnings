@@ -50,7 +50,7 @@ COMMIT TRANSACTION
 A transaction is a single, logical unit of work that may contain one or more statements. A transaction begins when the first statement is executed, and ends with a transaction commit or rollback. All statements wrapped in a transaction must complete successfully in order to commit the changes, otherwise, the whole transaction is rolledback.
 
 You may also rollback transactions yourself even if the statements completed successfully.  
-Ytou can even make save points allowing you to revert back to a point of the transaction if something fails.
+You can even make save points allowing you to revert back to a point of the transaction if something fails.
 
 Transactions are carried out in different modes.
 - Auto commit is the default. Every statement is treated as a transaction.
@@ -67,6 +67,11 @@ FROM [Employees]
 WITH (NOLOCK) -- <- this
 WHERE Id = 'GUID'
 ```
+
+### Isolation levels
+Transactions work with levels of isolation.
+- Pessimistic: assume conflicts will take place and take preventive measures to avoid conflicts.
+- Optimistic: assume conflicts are rare but requires validity check before committing.
 
 ### Rollback
 Let's take a moment to revist this keyword. Rollingback a transaction means to return data to a previous state, that is, back to the start of the current transaction.
