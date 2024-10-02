@@ -1,7 +1,7 @@
 # Spring Boot Basics
 
 ## Dependency Injection
-In Spring DI is also referred to as "Configuration" which is slightly misleading if you have a .NET background.
+In Spring DI is also referred to as "Configuration" which is slightly misleading if you have a .NET background since "Configuration" means the application settings.
 
 Spring uses a convention over configuration approach by utilizing "stereotypes". You wire up components by annoating them with `@Component`, `@Service`, and `@Repository`.
 Or, you can use "configuration classes" that acts as a collection of factory methods for different types, such as the example below.
