@@ -1,5 +1,18 @@
 # Spring Boot Basics
 
+- [Spring Boot Basics](#spring-boot-basics)
+  - [Dependency Injection](#dependency-injection)
+  - [Application Settings Configuration](#application-settings-configuration)
+  - [Setting up messaging](#setting-up-messaging)
+  - [Dates](#dates)
+  - [Optional (may return null)](#optional-may-return-null)
+  - [Spring WebFlux](#spring-webflux)
+  - [Testing](#testing)
+    - [Testing Spring endpoints](#testing-spring-endpoints)
+  - [Controller Action Model Binding](#controller-action-model-binding)
+  - [DispatchServlet](#dispatchservlet)
+  - [Exception handling](#exception-handling)
+
 ## Dependency Injection
 In Spring DI is also referred to as "Configuration" which is slightly misleading if you have a .NET background since "Configuration" means the application settings.
 
@@ -21,6 +34,7 @@ public class LoggerConfiguration {
 ```
 
 Spring also auto-configures "beans" if they're found in the classpath. To see which configurations are applied start the application with `--debug` switch.
+
 
 ## Application Settings Configuration
 Prefer yaml-based configuration over the traditional key-pair style in application.properties. Any configuration that may be changed in any environment must be configurable from start.
@@ -138,14 +152,17 @@ public class RegisterParticipant {
 ```
 
 ## Dates
+
 Avoid using the old, non-thread safe `Date`. Instead use types from java.time such as `LocalDate`, `LocalTime`, `Instant`.
 
 
 ## Optional (may return null)
+
 Use the `Optional<>` type to indicate a method may not return anything.
 
 
 ## Spring WebFlux
+
 A reactive spring framework available from spring 5.x.
 WebFlux offers an alternative programming model from the traditional spring MVC. WebFlux operates on reactive streams and are by nature async.
 
@@ -254,6 +271,27 @@ class TraceContextArgumentResolver implements HandlerMethodArgumentResolver {
         var requestId = webRequest.getHeader("other-header-name");
 
         return new TraceContext(transactionId, requestId);
+    }
+}
+```
+
+## DispatchServlet
+
+The `DispatchServlet` is the "heart" of the Spring boot web application. The servlet works as a gateway, intercepting incoming HTTP requests and initiates the process of handling the request.
+
+- [DispatcherServlet documentation](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-servlet.html)
+
+
+## Exception handling
+
+To handle exceptions, create a "Controller Advice" class. This can intercept exceptions before the response is sent, and allows you to manually create a suitable response.
+
+```java
+@RestControllerAdvice
+public class ControllerExceptionHandler {
+    @ExceptionHandler(SomeException.class)
+    public ResponseEntity<?> handleSomeException(SomeException ex) {
+        return new ResponseEntity("some json", HttpStatus.BAD_REQUEST);
     }
 }
 ```
