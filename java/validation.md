@@ -5,6 +5,9 @@
   - [Considerations](#considerations)
   - [Example](#example)
   - [Returning ProblemDetails](#returning-problemdetails)
+  - [Hibernate validator](#hibernate-validator)
+
+[View associated code here.](https://github.com/NMillard/spring-training)
 
 ## Dependency
 Enable validation by importing this package:
@@ -60,6 +63,8 @@ public ResponseEntity<Void> createUser(@RequestBody CreateUserRequest request) {
 
 The `@RequestBody` performs data type validation.
 
+> [!NOTE]
+> No other requirements is added to the `CreateUserRequest` yet.
 
 ## Returning ProblemDetails
 
@@ -90,3 +95,9 @@ public class GlobalExceptionHandler {
     }
 }
 ```
+
+## Hibernate validator
+
+Hibernate validator is a popular implementation of JSR380 Bean Validation 2.0 which provides a standardized way of validating constraints.
+
+Hibernate validator is already included in the `spring-boot-starter-validation` package.
