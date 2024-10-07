@@ -5,6 +5,7 @@
   - [Considerations](#considerations)
   - [Example](#example)
   - [Returning ProblemDetails](#returning-problemdetails)
+  - [Handling validation](#handling-validation)
   - [Hibernate validator](#hibernate-validator)
 
 [View associated code here.](https://github.com/NMillard/spring-training)
@@ -93,6 +94,44 @@ public class GlobalExceptionHandler {
                 )
                 .build();
     }
+}
+```
+
+This exeception handler method is invoked whenever the spring web application throws an exception during execution. 
+
+## Handling validation
+Say we update our request to the following:
+
+```java
+public record CreateUserRequest(
+        @NotNull @NotEmpty String name,
+        String lastName,
+
+        @Range(min = 1, max = 120)
+        int age) {
+}
+```
+
+To validate the `jakarta.validation.constraints.*` annotstions, we'll need to update the endpoint as well, with an `@Valid` parameter annotation.
+
+```java
+@PostMapping("") // POST api/users
+public ResponseEntity<Void> createUser(@Valid @RequestBody CreateUserRequest request) {
+    return ResponseEntity.ok().build();
+}
+```
+
+Also, if more than one validation fails, we'd like to summarize that in our Problem Details response. So, let's add another exception handler.
+
+```java
+@ExceptionHandler(MethodArgumentNotValidException.class)
+public ProblemDetail handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+    var violations = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Validation error");
+    List<String> v = ex.getFieldErrors().stream()
+            .map(violation -> "%s: %s". formatted(violation.getField(), violation.getDefaultMessage()))
+            .toList();
+    violations.setProperty("violations", v);
+    return violations;
 }
 ```
 
