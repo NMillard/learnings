@@ -41,8 +41,8 @@ But, it does mean that in controllers - the interface to our clients - we want t
 Write validation for the following:
 - Data types.
 - Codes - allowed values, such as enum values.
-- Range - number between x and y.
-- Format - ISO date format.
+- Range - for instance a number is between x and y.
+- Format - for instance a date is in ISO date format.
 - Consistency - relations between input data.
 - Uniqueness - the same data isn't provided more times, say in a list of items.
 
