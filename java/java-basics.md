@@ -9,6 +9,7 @@
   - [Annotations](#annotations)
   - [Generics](#generics)
     - [Wildcards](#wildcards)
+  - [Thread dumps](#thread-dumps)
 
 ## Records
 
@@ -86,3 +87,9 @@ The wildcard `<?>` is used to refer to a family of types.
 - `?`: Unbounded - all types
 - `? extends AType`: upper bounded. Refers to subtypes of `AType`. 
 - `? super AType`: lower bounded. Refers to supertypes of `AType`. 
+
+## Thread dumps
+
+A thread dump is essentially just text that represents the runtime state of a program at a specific point in time. Thread dumps are also referred to as Snapshots.
+
+This means, the thread dump contains all the call stacks of all threads being tracked by the JVM.
