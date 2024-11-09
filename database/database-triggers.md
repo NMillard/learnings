@@ -16,7 +16,9 @@ client about what is happening behind the scenes.
 
 I follow these practices to reduce the potential headaches that triggers may cause.
 
-1. No trigger on transaction/entity tables.
+1. No trigger on transaction/entity tables. Having triggers on regular tables that applications interact with will make
+   it hard for application developers to reason about the additional side effects that ripple out from queries in
+   the application.
 2. Triggers may only be created on special "trigger" tables so that the client is aware that
    inserts/update/deletes will cause side effects.
 3. Triggers must be well-documented.
