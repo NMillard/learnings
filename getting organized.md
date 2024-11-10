@@ -82,3 +82,19 @@ Then, for each goal set, describe the individual goal in terms of:
   Write concrete, actionable steps that accelerates you towards your aspirations. Be bold but realistic.
 - Measurable outcomes  
   Try to quantify your success. When have you reached your aspirations for this period? Measurable = able to say, “I accomplished x, y, z”.
+
+## Managing & mentoring
+
+Follow a _model-coach-sponsor_ approach to managing people. You need to display model behavior - the behavior that you want your talents to mimic. You coach the talent to succeed through practical advice and reflection. You sponsor the talent to get opportunities to succeed.
+
+Focus on your top-performers. Double down on top performers and make sure they're engaged.
+Don't get stuck on trying to bettering your low performing developers.
+
+You're worse off if your top performers leave, and, sometimes better off when your low performers leave.
+
+### Performance reviews
+
+Talents write the performance reviews - and the target audience is themselves.  
+A performance review is for a talent to reflect on his own performance, expectations, and career as a whole, and ensure he is on track.
+
+Your job as a manager is to coach talents on what goes into a well written slef-performance evaluation.
