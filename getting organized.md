@@ -85,6 +85,8 @@ Then, for each goal set, describe the individual goal in terms of:
 
 ## Managing & mentoring
 
+You need to do the same work as the people you manage. This is a core principal for effective people management.
+
 Follow a _model-coach-sponsor_ approach to managing people. You need to display model behavior - the behavior that you want your talents to mimic. You coach the talent to succeed through practical advice and reflection. You sponsor the talent to get opportunities to succeed.
 
 Focus on your top-performers. Double down on top performers and make sure they're engaged.
@@ -97,4 +99,13 @@ You're worse off if your top performers leave, and, sometimes better off when yo
 Talents write the performance reviews - and the target audience is themselves.  
 A performance review is for a talent to reflect on his own performance, expectations, and career as a whole, and ensure he is on track.
 
-Your job as a manager is to coach talents on what goes into a well written slef-performance evaluation.
+Your job as a manager is to coach talents on what goes into a well written slef-performance evaluation.'
+
+### Optimize for developer joy
+
+**Prioritize:**
+Real progress > Checkbox ticking.  
+Value > Arbitrary project management metrics.  
+Code quality > hasty deliverables.  
+Documentation > Tribal knowledge.  
+Verbal feedback > Written feedback.  
