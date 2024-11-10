@@ -103,7 +103,7 @@ Your job as a manager is to coach talents on what goes into a well written slef-
 
 ### Optimize for developer joy
 
-**Prioritize:**
+**Prioritize:**  
 Real progress > Checkbox ticking.  
 Value > Arbitrary project management metrics.  
 Code quality > hasty deliverables.  
