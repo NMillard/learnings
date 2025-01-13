@@ -99,13 +99,17 @@ You're worse off if your top performers leave, and, sometimes better off when yo
 Talents write the performance reviews - and the target audience is themselves.  
 A performance review is for a talent to reflect on his own performance, expectations, and career as a whole, and ensure he is on track.
 
-Your job as a manager is to coach talents on what goes into a well written slef-performance evaluation.'
+Your job as a manager is to coach talents on what goes into a well written slef-performance evaluation.
 
 ### Optimize for developer joy
 
 **Prioritize:**  
 Real progress > Checkbox ticking.  
 Value > Arbitrary project management metrics.  
-Code quality > hasty deliverables.  
+Code quality > Hasty deliverables.  
 Documentation > Tribal knowledge.  
 Verbal feedback > Written feedback.  
+
+Progress is sometimes measured in how many user stories did you do in a certain period of time, or, progress is reported 
+as how many tasks are checked off disregarding their actual importance. Real progress is made when it has a positive 
+effect on the team and customers. That's the only kind of progress that matters.

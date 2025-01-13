@@ -25,3 +25,4 @@ I follow these practices to reduce the potential headaches that triggers may cau
 
 ## Links
 - https://www.postgresql.org/docs/current/plpgsql-trigger.html
+- https://www.postgresql.org/docs/current/plpgsql-trigger.html#PLPGSQL-EVENT-TRIGGER
