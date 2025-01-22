@@ -1,0 +1,3 @@
+# Spring configuration
+
+## Auto configuration
