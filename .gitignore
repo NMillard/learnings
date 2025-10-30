@@ -2,3 +2,10 @@
 .DS_Store
 
 sailing
+
+# LaTeX
+*.synctex.gz
+*.log
+*.fls
+*.fdb_latexmk
+*.aux

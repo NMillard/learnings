@@ -31,8 +31,8 @@ The first being at the center and then moving outwards.
 
 ### Application layer
 
-At its core, the application layer is responsibile to implement use cases.
-It knows about the domain, but has no knowledge of persistence, presentation, or infrastructure.
+At its core, the application layer is responsible for implementing use cases.
+It knows about the domain but has no knowledge of persistence, presentation, or infrastructure.
 Events, commands, and queries live here.
 
 The application also provides interfaces to e.g. a data service (like DbContext in .NET) which the persistence layer will implement.
@@ -40,8 +40,8 @@ The application also provides interfaces to e.g. a data service (like DbContext 
 ### Commands and Queries
 
 These belong to the application layer.
-Commands does something - i.e. modifies state in the system. But does not return anything.
-Queries answer questions - i.e. no state modification, but returns a value.
+Commands do something—i.e., modifies state in the system. But do not return anything.
+Queries answer questions - i.e., no state modification, but returns a value.
 
 ### Structuring code
 
@@ -53,4 +53,4 @@ The structure is too generic to carry any meaning of the intent of the system.
 
 ## Problem Domain
 
-Make an effort to understand the problem domain, its entities and workflows.
+Make an effort to understand the problem domain, its entities, and workflows.

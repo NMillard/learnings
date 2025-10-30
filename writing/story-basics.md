@@ -2,7 +2,7 @@
 
 ## Narrative structure
 
-Be concious about how the story is told. Determine the key conflicts, main characters, setting and events.  
+Be conscious about how the story is told. Determine the key conflicts, main characters, setting and events.  
 Think about what happens at which stages.  
 
 ### The setup

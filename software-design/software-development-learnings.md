@@ -34,7 +34,7 @@ Generalize classes as much as possible.
 A message-chain is when a class knows about another class’ collaborators, and make calls to those collaborators. This should be avoided.  
 Fix by creating new methods on the immediate collaborator’s class that return values from its own collaborators.  
 
-## Layered Achitecture
+## Layered Architecture
 
 Use layered architecture that will use the correct level of abstraction at each layer.  
 

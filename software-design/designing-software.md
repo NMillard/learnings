@@ -69,6 +69,9 @@ We see orchestrations happening in many `Service` classes. They take a bunch of 
 Orchestrators often take a dependency on other services solely to notify them that something happened. This
 coupling can be eliminated just by publishing an in-process event and let interested services listen to that event.
 
+Other times, what I call "orchestrator" is worth having, and attempting to eliminate it results in a mess and a hard-to-understand
+interface.
+
 ## Managing constructor dependencies
 
 Inversion of control combined with dependency injection is an immensely valuable practice. Though, it may lead to constructor bloat if you're not careful.
@@ -167,8 +170,8 @@ Here are a few rules of thumb that I go by whenever I evaluate if code is good e
 
 - The code must be idiomatic. Follow the language's modern conventions. Conventions change as time goes by and being stuck with "what-was" as opposed to "what-is" is an important consideration. Stick by the modern conventions.
 - Only commit code that is analyzed by a static analysis tool such as SonarQube. You can easily spin up a local SonarQube container instance and run your code through it.
-- Don't allow code that allows invalid states. For instance, having a public default constructor.
-- Remove dependencies that are used just to gain access to this one class or constants that you need. When adding a dependency, rest assured that others will use it.
+- Don't allow code that affords invalid states. For instance, in many cases having a public default constructor.
+- Remove dependencies that are used just to gain access to this one class or constants that you need. When adding a dependency, rest assured that others will use it too .
 
 
 ## Resources
